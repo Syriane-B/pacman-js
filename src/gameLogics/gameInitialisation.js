@@ -6,6 +6,7 @@ import { screen, gameFloor, walls, foods } from "./mazeSetup";
 export function initGame() {
     const root = document.getElementById('root');
     let intervalGhostId = null;
+    let ghosts = [];
 
     // initializing game elements
     const pacMan = new PacMan(
@@ -23,15 +24,18 @@ export function initGame() {
             pacMan,
             GameOver
         );
+        ghosts.push(ghost1);
         gameFloor.appendChild(ghost1.getGhost());
         intervalGhostId = setInterval(() => {
-            gameFloor.appendChild(new Ghost(
+            let newGhost = new Ghost(
                 350,
                 350,
                 gameValues,
                 pacMan,
                 GameOver
-            ).getGhost());
+            );
+            ghosts.push(newGhost);
+            gameFloor.appendChild(newGhost.getGhost());
         }, 10000);
     }
     function GameOver() {
@@ -54,6 +58,11 @@ export function initGame() {
         text.style.fontSize = "40px";
         card.appendChild(text);
         gameFloor.appendChild(card);
+        ghosts.forEach(ghost => {
+            ghost.stopGhost();
+        })
+        clearInterval(intervalGhostId);
+        pacMan.stopPacmanMouth();
     }
     function Victory() {
         const card = document.createElement('div');
@@ -75,6 +84,11 @@ export function initGame() {
         text.style.fontSize = "40px";
         card.appendChild(text);
         gameFloor.appendChild(card);
+        ghosts.forEach(ghost => {
+            ghost.stopGhost();
+        })
+        clearInterval(intervalGhostId);
+        pacMan.stopPacmanMouth();
     }
 
 // we inject the element on root

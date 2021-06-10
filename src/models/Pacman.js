@@ -32,16 +32,17 @@ export default class PacMan extends Character {
         this.pac.style.left = `${this.posX - 25}px`;
         this.pac.style.bottom = `${this.posY}px`;
         // Pac Mouth
-        const mouth = document.createElement('div');
-        mouth.style.backgroundColor = "black";
-        mouth.style.position = "absolute";
-        mouth.style.width = "100%";
-        mouth.style.height = "100%";
-        mouth.style.clipPath = "polygon(100% 74%, 44% 48%, 100% 21%)";
-        mouth.style.animationName = "eat";
-        mouth.style.animationDuration = "0.7s";
-        mouth.style.animationIterationCount = "infinite";
-        this.pac.appendChild(mouth);
+        this.mouth = document.createElement('div');
+        this.mouth.style.backgroundColor = "black";
+        this.mouth.style.backgroundColor = "black";
+        this.mouth.style.position = "absolute";
+        this.mouth.style.width = "100%";
+        this.mouth.style.height = "100%";
+        this.mouth.style.clipPath = "polygon(100% 74%, 44% 48%, 100% 21%)";
+        this.mouth.style.animationName = "eat";
+        this.mouth.style.animationDuration = "0.7s";
+        this.mouth.style.animationIterationCount = "infinite";
+        this.pac.appendChild(this.mouth);
         this.initialization(this);
     }
 
@@ -106,5 +107,9 @@ export default class PacMan extends Character {
         this.pac.style.left = `${this.posX - 25}px`;
         this.pac.style.bottom = `${this.posY}px`;
         this.eatFood();
+    }
+
+    stopPacmanMouth = () => {
+        this.mouth.style.animationName = "";
     }
 }

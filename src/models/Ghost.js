@@ -151,4 +151,8 @@ export default class Ghost extends Character {
         this.ghost.style.left = `${this.posX - 25}px`;
         this.ghost.style.bottom = `${this.posY}px`;
     }
+
+    stopGhost() {
+        clearInterval(this.intervalId);
+    }
 }
