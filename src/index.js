@@ -1,3 +1,6 @@
+// importation de lodash
+import _ from 'lodash';
+
 const root = document.getElementById('root');
 
 // General constants
@@ -81,10 +84,10 @@ const wallsInfos = [
   {width: 10, height: 178, left: 400, top: 260},
 ];
 
-// Food 
+// Food
 const foodWidth = 10;
 const foodHeight = 10;
-const foodColor =  "#f3f1d6";
+const foodColor =  "#058434";
 const foodsPosition = [
   {top: 70, left: 80, id: 1},
   {top: 110, left: 80, id: 2},
@@ -175,7 +178,7 @@ const foodsPosition = [
   {top: 350, left: 440, id: 81},
   {top: 310, left: 440, id: 82},
   {top: 270, left: 440, id: 83},
-  
+
   {top: 430, left: 230, id: 84},
   {top: 390, left: 230, id: 85},
   {top: 350, left: 230, id: 86},
@@ -195,7 +198,7 @@ class Character {
   }
 
   getDirection = () => this.direction;
-  
+
   setDirection = direction => {
     this.direction = direction;
   }
@@ -240,7 +243,7 @@ class Character {
     this.wallsInfo.forEach(wall => {
       if(
         (((nextHorizontalMove + 25) >= (wall.left - wallDistance)) && ((nextHorizontalMove + 25) <= wall.left )) ||
-        (((nextHorizontalMove - 25) >= (wall.left + wall.width)) && ((nextHorizontalMove - 25) <= (wall.left + wall.width + wallDistance))) 
+        (((nextHorizontalMove - 25) >= (wall.left + wall.width)) && ((nextHorizontalMove - 25) <= (wall.left + wall.width + wallDistance)))
       ) {
         if(
           ((nextVerticalMove + 25) <= (heightFloor - wall.top)) && (nextVerticalMove >= (heightFloor - wall.top - wall.height))
@@ -466,7 +469,7 @@ class Ghost extends Character {
             _self.countTop = 0;
             _self.switchTop = false;
           }
-        } 
+        }
         if(randomMove === 'ArrowLeft' || randomMove === 'ArrowRight') {
           if(_self.countRight < ghostLimitStraightLine && !_self.switchLeft) {
             randomMove = _self.biasDirectionX;
@@ -482,7 +485,7 @@ class Ghost extends Character {
             _self.countRight = 0;
             _self.switchLeft = false;
           }
-        } 
+        }
           _self._super.handleMove(randomMove, stepGhost);
           _self.updatePosition();
         }
@@ -495,7 +498,7 @@ class Ghost extends Character {
   updatePosition = () => {
     // We check if the ghost hit pacman vertically
     if (Math.abs(this.posY - this.pac.getPosY() - sizePacman) < 15 ||
-        Math.abs(this.pac.getPosY() - this.posY - sizePacman)  < 15 
+        Math.abs(this.pac.getPosY() - this.posY - sizePacman)  < 15
     ) {
       // We check if pacman is align with ghost laterally
       if(Math.abs(this.posX - this.pac.getPosX()) < 25) {
