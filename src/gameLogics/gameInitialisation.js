@@ -93,11 +93,18 @@ export function initGame(levelSelected) {
         }, 10000 / (levelSelected * 0.6));
     }
     function GameOver() {
+        let newScore = -1;
+        let oldScore = parseInt(getCookie("pacmanScore"));
+        if (Number.isInteger(oldScore)) {
+            newScore = oldScore + 1;
+        }
+        createCookie('pacmanScore', newScore, 5);
         const card = document.createElement('div');
         card.style.width = "300px";
         card.style.height = "300px";
         card.style.border = "solid 3px #3F51B5";
         card.style.display = "flex";
+        card.style.flexFlow = "column";
         card.style.justifyContent = "center";
         card.style.alignItems = "center";
         card.style.backgroundColor = "black";
@@ -111,6 +118,13 @@ export function initGame(levelSelected) {
         text.style.fontWeight = "bold";
         text.style.fontSize = "40px";
         card.appendChild(text);
+        const scoreEl = document.createElement('div');
+        scoreEl.innerHTML = `Youre score is ${score} points`;
+        scoreEl.style.color = "red";
+        scoreEl.style.fontWeight = "bold";
+        scoreEl.style.textAlign = "center";
+        scoreEl.style.fontSize = "20px";
+        card.appendChild(scoreEl);
         gameFloor.appendChild(card);
         ghosts.forEach(ghost => {
             ghost.stopGhost();
@@ -119,12 +133,20 @@ export function initGame(levelSelected) {
         pacMan.stopPacmanMouth();
     }
     function Victory() {
+        let newScore = 1;
+        let oldScore = parseInt(getCookie("pacmanScore"));
+        if (Number.isInteger(oldScore)) {
+            newScore = oldScore + 1;
+        }
+        createCookie('pacmanScore', newScore, 5);
+
         const card = document.createElement('div');
         card.style.width = "300px";
         card.style.height = "300px";
         card.style.border = "solid 3px #3F51B5";
         card.style.display = "flex";
         card.style.justifyContent = "center";
+        card.style.flexFlow = "column"
         card.style.alignItems = "center";
         card.style.backgroundColor = "black";
         card.style.zIndex= 999;
@@ -137,12 +159,45 @@ export function initGame(levelSelected) {
         text.style.fontWeight = "bold";
         text.style.fontSize = "40px";
         card.appendChild(text);
+        const scoreEl = document.createElement('div');
+        scoreEl.innerHTML = `Youre score is ${newScore} points`;
+        scoreEl.style.color = "red";
+        scoreEl.style.fontWeight = "bold";
+        scoreEl.style.textAlign = "center";
+        scoreEl.style.fontSize = "20px";
+        card.appendChild(scoreEl);
         gameFloor.appendChild(card);
         ghosts.forEach(ghost => {
             ghost.stopGhost();
         })
         clearInterval(intervalGhostId);
         pacMan.stopPacmanMouth();
+    }
+    function createCookie(name, value, days)
+    {
+        let expires = '';
+        if (days)
+        {
+            let date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = ";expires=" + date.toGMTString();
+        }
+        document.Cookie = name + "=" + value + expires + ";domain=http://localhost;path=/;";
+    }
+    function getCookie(name)
+    {
+        if (document.cookie) {
+            let nomRC = name + "=";
+            let ca = document.Cookie.split(';');
+            for(let i=0;i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+
+                if (c.indexOf(nomRC) == 0)
+                    return c.substring(nomRC.length, c.length);
+            }
+        }
+        return "unknown";
     }
 
 // we inject the element on root
